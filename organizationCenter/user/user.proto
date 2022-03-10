@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package organizationCenter;
+package github.com/Chips-Zhang/protolib/organizationCenter/user;
 
 option go_package=".";
 

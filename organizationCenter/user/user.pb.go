@@ -4,7 +4,16 @@
 // 	protoc        v3.19.4
 // source: user.proto
 
-package user
+package github
+
+import (
+	"google.golang.org/protobuf/reflect/protoreflect"
+	"google.golang.org/protobuf/runtime/protoimpl"
+	"reflect"
+	"sync"
+)
+
+.com/Chips-Zhang/protolib/organizationCenter/user
 
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"

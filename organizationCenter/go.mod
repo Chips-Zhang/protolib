@@ -1,4 +1,4 @@
-module organizationCenter
+module github.com/Chips-Zhang/protolib/organizationCenter
 
 go 1.14
 
