@@ -1,4 +1,4 @@
-module github.com/Chips-Zhang/protolib/user
+module github.com/Chips-Zhang/protolib
 
 go 1.14
 

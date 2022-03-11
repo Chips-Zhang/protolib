@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package github.com/Chips-Zhang/protolib/user;
+package user;
 
 option go_package=".";
 
