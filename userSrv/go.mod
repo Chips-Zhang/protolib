@@ -1,4 +1,4 @@
-module github.com/Chips-Zhang/protolib/organizationCenter
+module userSrv
 
 go 1.14
 
