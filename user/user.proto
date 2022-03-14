@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package user;
 
-option go_package=".;github.com/Chips-Zhang/protolib/user";
+option go_package=".;user";
 
 service userService {
   rpc Greet(Request) returns (Response) {}
