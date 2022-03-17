@@ -6,12 +6,16 @@ option go_package=".;user";
 
 service userService {
   rpc Greet(Request) returns (Response) {}
+  rpc Login(Request) returns (Response) {}
 }
 
 message Request {
   string name = 1;
+  string employeeId = 2;
+  string password = 3;
 }
 
 message Response {
   string msg = 1;
+  bool loginState = 2;
 }
