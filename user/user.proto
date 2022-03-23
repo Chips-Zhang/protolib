@@ -19,17 +19,19 @@ message Request {
 message Response {
   string msg = 1;
   bool loginState = 2;
-  message UserInfo{
-    string EmployeeCode = 1;
-    string UserId = 2;
-    string DepartmentId = 3;
-    string UserType = 4;
-    int32  Disable = 5;
-    uint64 LastLoginTime = 6;
-    uint64 CreatedTime = 7;
-    string Description = 8;
-    string Alias = 9;
-    int32  CanChanged = 10;
-    string Phone = 11;
-  };
+  UserInfo userInfo = 3;
 }
+
+message UserInfo{
+  string EmployeeCode = 1;
+  string UserId = 2;
+  string DepartmentId = 3;
+  string UserType = 4;
+  int32  Disable = 5;
+  uint64 LastLoginTime = 6;
+  uint64 CreatedTime = 7;
+  string Description = 8;
+  string Alias = 9;
+  int32  CanChanged = 10;
+  string Phone = 11;
+};
