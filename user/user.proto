@@ -2,11 +2,12 @@ syntax = "proto3";
 
 package user;
 
-option go_package=".;user";
+option go_package = ".;user";
 
 service userService {
   rpc Greet(Request) returns (Response) {}
   rpc Login(Request) returns (Response) {}
+  rpc GetUserInfo(Request) returns(Response) {}
 }
 
 message Request {
@@ -18,4 +19,17 @@ message Request {
 message Response {
   string msg = 1;
   bool loginState = 2;
+  message UserInfo{
+    string EmployeeCode = 1;
+    string UserId = 2;
+    string DepartmentId = 3;
+    string UserType = 4;
+    int32  Disable = 5;
+    uint64 LastLoginTime = 6;
+    uint64 CreatedTime = 7;
+    string Description = 8;
+    string Alias = 9;
+    int32  CanChanged = 10;
+    string Phone = 11;
+  };
 }
