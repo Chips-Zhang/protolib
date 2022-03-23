@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package user;
 
+
 option go_package = ".;user";
 
 service userService {
@@ -27,11 +28,11 @@ message UserInfo{
   string UserId = 2;
   string DepartmentId = 3;
   string UserType = 4;
-  int32  Disable = 5;
-  uint64 LastLoginTime = 6;
-  uint64 CreatedTime = 7;
+  bool  Disable = 5;
+  int64 LastLoginTimestamp = 6;
+  int64 CreatedTimestamp = 7;
   string Description = 8;
   string Alias = 9;
-  int32  CanChanged = 10;
+  bool  CanChanged = 10;
   string Phone = 11;
 };
