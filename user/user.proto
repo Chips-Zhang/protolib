@@ -21,6 +21,7 @@ message Response {
   string msg = 1;
   bool loginState = 2;
   UserInfo userInfo = 3;
+  repeated Role roles = 4;
 }
 
 message UserInfo{
@@ -36,3 +37,7 @@ message UserInfo{
   bool  CanChanged = 10;
   string Phone = 11;
 };
+
+message Role{
+  string RoleId = 1;
+}
