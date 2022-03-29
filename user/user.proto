@@ -24,6 +24,11 @@ message Response {
   repeated string roles = 4;
 }
 
+message DeptResponse{
+  string msg = 1;
+  string deptInfo = 2;
+}
+
 message UserInfo{
   string EmployeeCode = 1;
   string UserId = 2;
