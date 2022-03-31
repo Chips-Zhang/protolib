@@ -9,6 +9,7 @@ service userService {
   rpc Greet(Request) returns (Response) {}
   rpc Login(Request) returns (Response) {}
   rpc GetUserInfo(Request) returns(Response) {}
+  rpc GetUserInfoList(UserListRequest) returns(UserListResponse){}
   rpc GetDeptInfo(Request) returns(DeptResponse){}
 }
 
@@ -28,6 +29,22 @@ message Response {
 message DeptResponse{
   string msg = 1;
   string deptInfo = 2;
+}
+
+message UserListRequest{
+  // 是否是查询操作
+  string name = 1;
+  string deptID = 2;
+  // 排序方式 +id -id
+  string sort = 3;
+  // 第几页
+  int32 page = 4;
+  // 每页项数
+  int32 limit = 5;
+}
+
+message UserListResponse{
+  repeated UserInfo userInfoList = 1;
 }
 
 message UserInfo{

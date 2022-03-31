@@ -45,6 +45,7 @@ type UserService interface {
 	Greet(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
 	Login(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
 	GetUserInfo(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
+	GetUserInfoList(ctx context.Context, in *UserListRequest, opts ...client.CallOption) (*UserListResponse, error)
 	GetDeptInfo(ctx context.Context, in *Request, opts ...client.CallOption) (*DeptResponse, error)
 }
 
@@ -90,6 +91,16 @@ func (c *userService) GetUserInfo(ctx context.Context, in *Request, opts ...clie
 	return out, nil
 }
 
+func (c *userService) GetUserInfoList(ctx context.Context, in *UserListRequest, opts ...client.CallOption) (*UserListResponse, error) {
+	req := c.c.NewRequest(c.name, "UserService.GetUserInfoList", in)
+	out := new(UserListResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *userService) GetDeptInfo(ctx context.Context, in *Request, opts ...client.CallOption) (*DeptResponse, error) {
 	req := c.c.NewRequest(c.name, "UserService.GetDeptInfo", in)
 	out := new(DeptResponse)
@@ -106,6 +117,7 @@ type UserServiceHandler interface {
 	Greet(context.Context, *Request, *Response) error
 	Login(context.Context, *Request, *Response) error
 	GetUserInfo(context.Context, *Request, *Response) error
+	GetUserInfoList(context.Context, *UserListRequest, *UserListResponse) error
 	GetDeptInfo(context.Context, *Request, *DeptResponse) error
 }
 
@@ -114,6 +126,7 @@ func RegisterUserServiceHandler(s server.Server, hdlr UserServiceHandler, opts .
 		Greet(ctx context.Context, in *Request, out *Response) error
 		Login(ctx context.Context, in *Request, out *Response) error
 		GetUserInfo(ctx context.Context, in *Request, out *Response) error
+		GetUserInfoList(ctx context.Context, in *UserListRequest, out *UserListResponse) error
 		GetDeptInfo(ctx context.Context, in *Request, out *DeptResponse) error
 	}
 	type UserService struct {
@@ -137,6 +150,10 @@ func (h *userServiceHandler) Login(ctx context.Context, in *Request, out *Respon
 
 func (h *userServiceHandler) GetUserInfo(ctx context.Context, in *Request, out *Response) error {
 	return h.UserServiceHandler.GetUserInfo(ctx, in, out)
+}
+
+func (h *userServiceHandler) GetUserInfoList(ctx context.Context, in *UserListRequest, out *UserListResponse) error {
+	return h.UserServiceHandler.GetUserInfoList(ctx, in, out)
 }
 
 func (h *userServiceHandler) GetDeptInfo(ctx context.Context, in *Request, out *DeptResponse) error {
