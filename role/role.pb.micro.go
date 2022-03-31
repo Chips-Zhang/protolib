@@ -42,7 +42,7 @@ func NewRoleServiceEndpoints() []*api.Endpoint {
 // Client API for RoleService service
 
 type RoleService interface {
-	GetSubSysInfo(ctx context.Context, in *SubSysInfoRequest, opts ...client.CallOption) (*SubSysInfoResponse, error)
+	GetSubSysInfo(ctx context.Context, in *Request, opts ...client.CallOption) (*SubSysInfoResponse, error)
 }
 
 type roleService struct {
@@ -57,7 +57,7 @@ func NewRoleService(name string, c client.Client) RoleService {
 	}
 }
 
-func (c *roleService) GetSubSysInfo(ctx context.Context, in *SubSysInfoRequest, opts ...client.CallOption) (*SubSysInfoResponse, error) {
+func (c *roleService) GetSubSysInfo(ctx context.Context, in *Request, opts ...client.CallOption) (*SubSysInfoResponse, error) {
 	req := c.c.NewRequest(c.name, "RoleService.GetSubSysInfo", in)
 	out := new(SubSysInfoResponse)
 	err := c.c.Call(ctx, req, out, opts...)
@@ -70,12 +70,12 @@ func (c *roleService) GetSubSysInfo(ctx context.Context, in *SubSysInfoRequest, 
 // Server API for RoleService service
 
 type RoleServiceHandler interface {
-	GetSubSysInfo(context.Context, *SubSysInfoRequest, *SubSysInfoResponse) error
+	GetSubSysInfo(context.Context, *Request, *SubSysInfoResponse) error
 }
 
 func RegisterRoleServiceHandler(s server.Server, hdlr RoleServiceHandler, opts ...server.HandlerOption) error {
 	type roleService interface {
-		GetSubSysInfo(ctx context.Context, in *SubSysInfoRequest, out *SubSysInfoResponse) error
+		GetSubSysInfo(ctx context.Context, in *Request, out *SubSysInfoResponse) error
 	}
 	type RoleService struct {
 		roleService
@@ -88,6 +88,6 @@ type roleServiceHandler struct {
 	RoleServiceHandler
 }
 
-func (h *roleServiceHandler) GetSubSysInfo(ctx context.Context, in *SubSysInfoRequest, out *SubSysInfoResponse) error {
+func (h *roleServiceHandler) GetSubSysInfo(ctx context.Context, in *Request, out *SubSysInfoResponse) error {
 	return h.RoleServiceHandler.GetSubSysInfo(ctx, in, out)
 }
