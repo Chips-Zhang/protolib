@@ -6,7 +6,7 @@ package role;
 option go_package = ".;role";
 
 service roleService {
-  rpc GetSubSysInfo(Request) returns(SubSysInfoResponse){}
+  rpc GetSubSysInfo(SubSysInfoRequest) returns(SubSysInfoResponse){}
 }
 
 message Request {
@@ -16,6 +16,10 @@ message Request {
 
 message Response {
   string msg = 1;
+}
+
+message SubSysInfoRequest{
+  int32 simple = 1;
 }
 
 message SubSysInfoResponse{
