@@ -45,6 +45,7 @@ message UserListRequest{
 
 message UserListResponse{
   repeated UserInfo userInfoList = 1;
+  int32 Total = 2;
 }
 
 message UserInfo{
