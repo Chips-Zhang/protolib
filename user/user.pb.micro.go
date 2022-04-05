@@ -47,6 +47,9 @@ type UserService interface {
 	GetUserInfo(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
 	GetUserInfoList(ctx context.Context, in *UserListRequest, opts ...client.CallOption) (*UserListResponse, error)
 	GetDeptInfo(ctx context.Context, in *Request, opts ...client.CallOption) (*DeptResponse, error)
+	CreateEmployee(ctx context.Context, in *OperationUserRequest, opts ...client.CallOption) (*Response, error)
+	UpdateEmployee(ctx context.Context, in *OperationUserRequest, opts ...client.CallOption) (*Response, error)
+	DeleteEmployee(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
 }
 
 type userService struct {
@@ -111,6 +114,36 @@ func (c *userService) GetDeptInfo(ctx context.Context, in *Request, opts ...clie
 	return out, nil
 }
 
+func (c *userService) CreateEmployee(ctx context.Context, in *OperationUserRequest, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "UserService.CreateEmployee", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userService) UpdateEmployee(ctx context.Context, in *OperationUserRequest, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "UserService.UpdateEmployee", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userService) DeleteEmployee(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "UserService.DeleteEmployee", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for UserService service
 
 type UserServiceHandler interface {
@@ -119,6 +152,9 @@ type UserServiceHandler interface {
 	GetUserInfo(context.Context, *Request, *Response) error
 	GetUserInfoList(context.Context, *UserListRequest, *UserListResponse) error
 	GetDeptInfo(context.Context, *Request, *DeptResponse) error
+	CreateEmployee(context.Context, *OperationUserRequest, *Response) error
+	UpdateEmployee(context.Context, *OperationUserRequest, *Response) error
+	DeleteEmployee(context.Context, *Request, *Response) error
 }
 
 func RegisterUserServiceHandler(s server.Server, hdlr UserServiceHandler, opts ...server.HandlerOption) error {
@@ -128,6 +164,9 @@ func RegisterUserServiceHandler(s server.Server, hdlr UserServiceHandler, opts .
 		GetUserInfo(ctx context.Context, in *Request, out *Response) error
 		GetUserInfoList(ctx context.Context, in *UserListRequest, out *UserListResponse) error
 		GetDeptInfo(ctx context.Context, in *Request, out *DeptResponse) error
+		CreateEmployee(ctx context.Context, in *OperationUserRequest, out *Response) error
+		UpdateEmployee(ctx context.Context, in *OperationUserRequest, out *Response) error
+		DeleteEmployee(ctx context.Context, in *Request, out *Response) error
 	}
 	type UserService struct {
 		userService
@@ -158,4 +197,16 @@ func (h *userServiceHandler) GetUserInfoList(ctx context.Context, in *UserListRe
 
 func (h *userServiceHandler) GetDeptInfo(ctx context.Context, in *Request, out *DeptResponse) error {
 	return h.UserServiceHandler.GetDeptInfo(ctx, in, out)
+}
+
+func (h *userServiceHandler) CreateEmployee(ctx context.Context, in *OperationUserRequest, out *Response) error {
+	return h.UserServiceHandler.CreateEmployee(ctx, in, out)
+}
+
+func (h *userServiceHandler) UpdateEmployee(ctx context.Context, in *OperationUserRequest, out *Response) error {
+	return h.UserServiceHandler.UpdateEmployee(ctx, in, out)
+}
+
+func (h *userServiceHandler) DeleteEmployee(ctx context.Context, in *Request, out *Response) error {
+	return h.UserServiceHandler.DeleteEmployee(ctx, in, out)
 }

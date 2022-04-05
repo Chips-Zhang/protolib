@@ -11,6 +11,9 @@ service userService {
   rpc GetUserInfo(Request) returns(Response) {}
   rpc GetUserInfoList(UserListRequest) returns(UserListResponse){}
   rpc GetDeptInfo(Request) returns(DeptResponse){}
+  rpc CreateEmployee(OperationUserRequest) returns(Response){}
+  rpc UpdateEmployee(OperationUserRequest) returns(Response){}
+  rpc DeleteEmployee(Request) returns(Response){}
 }
 
 message Request {
@@ -24,6 +27,7 @@ message Response {
   bool loginState = 2;
   UserInfo userInfo = 3;
   repeated string roles = 4;
+  bool operationState = 5;
 }
 
 message DeptResponse{
@@ -46,6 +50,10 @@ message UserListRequest{
 message UserListResponse{
   repeated UserInfo userInfoList = 1;
   int32 Total = 2;
+}
+
+message OperationUserRequest{
+  UserInfo userInfo = 1;
 }
 
 message UserInfo{
