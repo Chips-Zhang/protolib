@@ -11,6 +11,7 @@ service userService {
   rpc GetUserInfo(Request) returns(Response) {}
   rpc GetUserInfoList(UserListRequest) returns(UserListResponse){}
   rpc GetDeptInfo(Request) returns(DeptResponse){}
+  rpc CreateEmployeeCode(Request) returns(Response){}
   rpc CreateEmployee(OperationUserRequest) returns(Response){}
   rpc UpdateEmployee(OperationUserRequest) returns(Response){}
   rpc DeleteEmployee(Request) returns(Response){}

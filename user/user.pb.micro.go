@@ -47,6 +47,7 @@ type UserService interface {
 	GetUserInfo(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
 	GetUserInfoList(ctx context.Context, in *UserListRequest, opts ...client.CallOption) (*UserListResponse, error)
 	GetDeptInfo(ctx context.Context, in *Request, opts ...client.CallOption) (*DeptResponse, error)
+	CreateEmployeeCode(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
 	CreateEmployee(ctx context.Context, in *OperationUserRequest, opts ...client.CallOption) (*Response, error)
 	UpdateEmployee(ctx context.Context, in *OperationUserRequest, opts ...client.CallOption) (*Response, error)
 	DeleteEmployee(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
@@ -114,6 +115,16 @@ func (c *userService) GetDeptInfo(ctx context.Context, in *Request, opts ...clie
 	return out, nil
 }
 
+func (c *userService) CreateEmployeeCode(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "UserService.CreateEmployeeCode", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *userService) CreateEmployee(ctx context.Context, in *OperationUserRequest, opts ...client.CallOption) (*Response, error) {
 	req := c.c.NewRequest(c.name, "UserService.CreateEmployee", in)
 	out := new(Response)
@@ -152,6 +163,7 @@ type UserServiceHandler interface {
 	GetUserInfo(context.Context, *Request, *Response) error
 	GetUserInfoList(context.Context, *UserListRequest, *UserListResponse) error
 	GetDeptInfo(context.Context, *Request, *DeptResponse) error
+	CreateEmployeeCode(context.Context, *Request, *Response) error
 	CreateEmployee(context.Context, *OperationUserRequest, *Response) error
 	UpdateEmployee(context.Context, *OperationUserRequest, *Response) error
 	DeleteEmployee(context.Context, *Request, *Response) error
@@ -164,6 +176,7 @@ func RegisterUserServiceHandler(s server.Server, hdlr UserServiceHandler, opts .
 		GetUserInfo(ctx context.Context, in *Request, out *Response) error
 		GetUserInfoList(ctx context.Context, in *UserListRequest, out *UserListResponse) error
 		GetDeptInfo(ctx context.Context, in *Request, out *DeptResponse) error
+		CreateEmployeeCode(ctx context.Context, in *Request, out *Response) error
 		CreateEmployee(ctx context.Context, in *OperationUserRequest, out *Response) error
 		UpdateEmployee(ctx context.Context, in *OperationUserRequest, out *Response) error
 		DeleteEmployee(ctx context.Context, in *Request, out *Response) error
@@ -197,6 +210,10 @@ func (h *userServiceHandler) GetUserInfoList(ctx context.Context, in *UserListRe
 
 func (h *userServiceHandler) GetDeptInfo(ctx context.Context, in *Request, out *DeptResponse) error {
 	return h.UserServiceHandler.GetDeptInfo(ctx, in, out)
+}
+
+func (h *userServiceHandler) CreateEmployeeCode(ctx context.Context, in *Request, out *Response) error {
+	return h.UserServiceHandler.CreateEmployeeCode(ctx, in, out)
 }
 
 func (h *userServiceHandler) CreateEmployee(ctx context.Context, in *OperationUserRequest, out *Response) error {
