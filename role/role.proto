@@ -7,6 +7,11 @@ option go_package = ".;role";
 
 service roleService {
   rpc GetSubSysInfo(SubSysInfoRequest) returns(SubSysInfoResponse){}
+  rpc FetchRoleList(RoleListRequest) returns(RoleListResponse){}
+  rpc FetchUserList(Request) returns(UserListResponse){}
+  rpc AddRole(NewRoleRequest) returns(Response){}
+  rpc UpdateRole(NewRoleRequest) returns(Response){}
+  rpc DeleteRole(Request) returns(Response){}
 }
 
 message Request {
@@ -27,3 +32,34 @@ message SubSysInfoResponse{
   string subSysInfo = 2;
 }
 
+message RoleListRequest{
+    string name  = 1;
+    string adminId = 2;
+    int32 page = 3;
+    int32 limit = 4;
+}
+
+message RoleListResponse{
+  repeated RoleInfo roleInfoList = 1;
+  int32 total = 2;
+}
+
+message NewRoleRequest{
+  RoleInfo roleInfo = 1;
+}
+
+message RoleInfo{
+    string roleId = 1;
+    string roleName = 2;
+    string description = 3;
+    string adminId = 4;
+}
+
+message UserListResponse{
+  repeated UserInfo userList = 1;
+}
+
+message UserInfo{
+    string employeeId = 1;
+    string employeeName = 2;
+}

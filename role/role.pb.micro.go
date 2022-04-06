@@ -43,6 +43,11 @@ func NewRoleServiceEndpoints() []*api.Endpoint {
 
 type RoleService interface {
 	GetSubSysInfo(ctx context.Context, in *SubSysInfoRequest, opts ...client.CallOption) (*SubSysInfoResponse, error)
+	FetchRoleList(ctx context.Context, in *RoleListRequest, opts ...client.CallOption) (*RoleListResponse, error)
+	FetchUserList(ctx context.Context, in *Request, opts ...client.CallOption) (*UserListResponse, error)
+	AddRole(ctx context.Context, in *NewRoleRequest, opts ...client.CallOption) (*Response, error)
+	UpdateRole(ctx context.Context, in *NewRoleRequest, opts ...client.CallOption) (*Response, error)
+	DeleteRole(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
 }
 
 type roleService struct {
@@ -67,15 +72,75 @@ func (c *roleService) GetSubSysInfo(ctx context.Context, in *SubSysInfoRequest, 
 	return out, nil
 }
 
+func (c *roleService) FetchRoleList(ctx context.Context, in *RoleListRequest, opts ...client.CallOption) (*RoleListResponse, error) {
+	req := c.c.NewRequest(c.name, "RoleService.FetchRoleList", in)
+	out := new(RoleListResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *roleService) FetchUserList(ctx context.Context, in *Request, opts ...client.CallOption) (*UserListResponse, error) {
+	req := c.c.NewRequest(c.name, "RoleService.FetchUserList", in)
+	out := new(UserListResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *roleService) AddRole(ctx context.Context, in *NewRoleRequest, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "RoleService.AddRole", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *roleService) UpdateRole(ctx context.Context, in *NewRoleRequest, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "RoleService.UpdateRole", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *roleService) DeleteRole(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "RoleService.DeleteRole", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for RoleService service
 
 type RoleServiceHandler interface {
 	GetSubSysInfo(context.Context, *SubSysInfoRequest, *SubSysInfoResponse) error
+	FetchRoleList(context.Context, *RoleListRequest, *RoleListResponse) error
+	FetchUserList(context.Context, *Request, *UserListResponse) error
+	AddRole(context.Context, *NewRoleRequest, *Response) error
+	UpdateRole(context.Context, *NewRoleRequest, *Response) error
+	DeleteRole(context.Context, *Request, *Response) error
 }
 
 func RegisterRoleServiceHandler(s server.Server, hdlr RoleServiceHandler, opts ...server.HandlerOption) error {
 	type roleService interface {
 		GetSubSysInfo(ctx context.Context, in *SubSysInfoRequest, out *SubSysInfoResponse) error
+		FetchRoleList(ctx context.Context, in *RoleListRequest, out *RoleListResponse) error
+		FetchUserList(ctx context.Context, in *Request, out *UserListResponse) error
+		AddRole(ctx context.Context, in *NewRoleRequest, out *Response) error
+		UpdateRole(ctx context.Context, in *NewRoleRequest, out *Response) error
+		DeleteRole(ctx context.Context, in *Request, out *Response) error
 	}
 	type RoleService struct {
 		roleService
@@ -90,4 +155,24 @@ type roleServiceHandler struct {
 
 func (h *roleServiceHandler) GetSubSysInfo(ctx context.Context, in *SubSysInfoRequest, out *SubSysInfoResponse) error {
 	return h.RoleServiceHandler.GetSubSysInfo(ctx, in, out)
+}
+
+func (h *roleServiceHandler) FetchRoleList(ctx context.Context, in *RoleListRequest, out *RoleListResponse) error {
+	return h.RoleServiceHandler.FetchRoleList(ctx, in, out)
+}
+
+func (h *roleServiceHandler) FetchUserList(ctx context.Context, in *Request, out *UserListResponse) error {
+	return h.RoleServiceHandler.FetchUserList(ctx, in, out)
+}
+
+func (h *roleServiceHandler) AddRole(ctx context.Context, in *NewRoleRequest, out *Response) error {
+	return h.RoleServiceHandler.AddRole(ctx, in, out)
+}
+
+func (h *roleServiceHandler) UpdateRole(ctx context.Context, in *NewRoleRequest, out *Response) error {
+	return h.RoleServiceHandler.UpdateRole(ctx, in, out)
+}
+
+func (h *roleServiceHandler) DeleteRole(ctx context.Context, in *Request, out *Response) error {
+	return h.RoleServiceHandler.DeleteRole(ctx, in, out)
 }
