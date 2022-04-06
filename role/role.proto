@@ -37,6 +37,7 @@ message RoleListRequest{
     string adminId = 2;
     int32 page = 3;
     int32 limit = 4;
+    repeated string funcs = 5;
 }
 
 message RoleListResponse{
