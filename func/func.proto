@@ -6,17 +6,44 @@ package role;
 option go_package = ".;func";
 
 service funcService {
-
+  rpc FetchControlUnitList(FetchListRequest) returns(FetchListResponse){}
+  rpc AddControlUnit(AddControlUnitRequest) returns(Response){}
+  rpc GetSubFuncId(Request) returns(Response){}
+  rpc DeleteControlUnit(Request) returns(Response){}
 }
 
-//message Request {
-//  string employeeId = 1;
-//  string roleId = 2;
-//}
-//
-//message Response {
-//  string msg = 1;
-//}
+message Request {
+  string controlUnitId = 1;
+}
+
+message FetchListRequest{
+  string name = 1;
+  string adminId = 2;
+  int32 page = 3;
+  int32 limit = 4;
+}
+
+message FetchListResponse{
+  repeated ControlUnitInfo controlUnitList = 1;
+}
+
+message ControlUnitInfo{
+  string controlUnitId = 1;
+  string controlUnitName = 2;
+  string description = 3;
+  string controlUnitLevel = 4;
+}
+
+message AddControlUnitRequest{
+  string controlUnitId = 1;
+  string controlUnitName = 2;
+  string description = 3;
+  string controlUnitLevel = 4;
+}
+
+message Response {
+  string msg = 1;
+}
 
 
 
