@@ -1,4 +1,4 @@
-module github.com/Chips-Zhang/protolib/func
+module github.com/Chips-Zhang/protolib/unit
 
 go 1.14
 
