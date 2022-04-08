@@ -3,7 +3,7 @@ syntax = "proto3";
 package func;
 
 
-option go_package = ".;func";
+option go_package = ".;unit";
 
 service funcService {
   rpc FetchControlUnitList(FetchListRequest) returns(FetchListResponse){}
