@@ -25,7 +25,7 @@ message FetchListRequest{
 
 message FetchListResponse{
   repeated ControlUnitInfo controlUnitList = 1;
-  int32 Total = 2;
+  int32 total = 2;
 }
 
 message ControlUnitInfo{
@@ -44,6 +44,7 @@ message AddControlUnitRequest{
 
 message Response {
   string msg = 1;
+  int32 num = 2;
 }
 
 
