@@ -32,14 +32,14 @@ message ControlUnitInfo{
   string controlUnitId = 1;
   string controlUnitName = 2;
   string description = 3;
-  string controlUnitLevel = 4;
+  int32 controlUnitLevel = 4;
 }
 
 message AddControlUnitRequest{
   string controlUnitId = 1;
   string controlUnitName = 2;
   string description = 3;
-  string controlUnitLevel = 4;
+  int32 controlUnitLevel = 4;
 }
 
 message Response {
