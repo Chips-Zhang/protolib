@@ -12,7 +12,8 @@ service roleService {
   rpc AddRole(NewRoleRequest) returns(Response){}
   rpc UpdateRole(NewRoleRequest) returns(Response){}
   rpc DeleteRole(Request) returns(Response){}
-  rpc GetTransferData(TransferDataRequest) returns(TransferDataResponse){}
+  rpc GetControlUnitTransferData(TransferDataRequest) returns(TransferDataResponse){}
+  rpc GetUserTransferData(TransferDataRequest) returns(TransferDataResponse){}
 }
 
 message Request {

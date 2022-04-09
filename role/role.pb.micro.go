@@ -48,7 +48,8 @@ type RoleService interface {
 	AddRole(ctx context.Context, in *NewRoleRequest, opts ...client.CallOption) (*Response, error)
 	UpdateRole(ctx context.Context, in *NewRoleRequest, opts ...client.CallOption) (*Response, error)
 	DeleteRole(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
-	GetTransferData(ctx context.Context, in *TransferDataRequest, opts ...client.CallOption) (*TransferDataResponse, error)
+	GetControlUnitTransferData(ctx context.Context, in *TransferDataRequest, opts ...client.CallOption) (*TransferDataResponse, error)
+	GetUserTransferData(ctx context.Context, in *TransferDataRequest, opts ...client.CallOption) (*TransferDataResponse, error)
 }
 
 type roleService struct {
@@ -123,8 +124,18 @@ func (c *roleService) DeleteRole(ctx context.Context, in *Request, opts ...clien
 	return out, nil
 }
 
-func (c *roleService) GetTransferData(ctx context.Context, in *TransferDataRequest, opts ...client.CallOption) (*TransferDataResponse, error) {
-	req := c.c.NewRequest(c.name, "RoleService.GetTransferData", in)
+func (c *roleService) GetControlUnitTransferData(ctx context.Context, in *TransferDataRequest, opts ...client.CallOption) (*TransferDataResponse, error) {
+	req := c.c.NewRequest(c.name, "RoleService.GetControlUnitTransferData", in)
+	out := new(TransferDataResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *roleService) GetUserTransferData(ctx context.Context, in *TransferDataRequest, opts ...client.CallOption) (*TransferDataResponse, error) {
+	req := c.c.NewRequest(c.name, "RoleService.GetUserTransferData", in)
 	out := new(TransferDataResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -142,7 +153,8 @@ type RoleServiceHandler interface {
 	AddRole(context.Context, *NewRoleRequest, *Response) error
 	UpdateRole(context.Context, *NewRoleRequest, *Response) error
 	DeleteRole(context.Context, *Request, *Response) error
-	GetTransferData(context.Context, *TransferDataRequest, *TransferDataResponse) error
+	GetControlUnitTransferData(context.Context, *TransferDataRequest, *TransferDataResponse) error
+	GetUserTransferData(context.Context, *TransferDataRequest, *TransferDataResponse) error
 }
 
 func RegisterRoleServiceHandler(s server.Server, hdlr RoleServiceHandler, opts ...server.HandlerOption) error {
@@ -153,7 +165,8 @@ func RegisterRoleServiceHandler(s server.Server, hdlr RoleServiceHandler, opts .
 		AddRole(ctx context.Context, in *NewRoleRequest, out *Response) error
 		UpdateRole(ctx context.Context, in *NewRoleRequest, out *Response) error
 		DeleteRole(ctx context.Context, in *Request, out *Response) error
-		GetTransferData(ctx context.Context, in *TransferDataRequest, out *TransferDataResponse) error
+		GetControlUnitTransferData(ctx context.Context, in *TransferDataRequest, out *TransferDataResponse) error
+		GetUserTransferData(ctx context.Context, in *TransferDataRequest, out *TransferDataResponse) error
 	}
 	type RoleService struct {
 		roleService
@@ -190,6 +203,10 @@ func (h *roleServiceHandler) DeleteRole(ctx context.Context, in *Request, out *R
 	return h.RoleServiceHandler.DeleteRole(ctx, in, out)
 }
 
-func (h *roleServiceHandler) GetTransferData(ctx context.Context, in *TransferDataRequest, out *TransferDataResponse) error {
-	return h.RoleServiceHandler.GetTransferData(ctx, in, out)
+func (h *roleServiceHandler) GetControlUnitTransferData(ctx context.Context, in *TransferDataRequest, out *TransferDataResponse) error {
+	return h.RoleServiceHandler.GetControlUnitTransferData(ctx, in, out)
+}
+
+func (h *roleServiceHandler) GetUserTransferData(ctx context.Context, in *TransferDataRequest, out *TransferDataResponse) error {
+	return h.RoleServiceHandler.GetUserTransferData(ctx, in, out)
 }
