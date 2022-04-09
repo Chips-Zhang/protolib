@@ -51,6 +51,8 @@ type UserService interface {
 	CreateEmployee(ctx context.Context, in *OperationUserRequest, opts ...client.CallOption) (*Response, error)
 	UpdateEmployee(ctx context.Context, in *OperationUserRequest, opts ...client.CallOption) (*Response, error)
 	DeleteEmployee(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
+	RevokeRole(ctx context.Context, in *RoleControlRequest, opts ...client.CallOption) (*Response, error)
+	GrantRole(ctx context.Context, in *RoleControlRequest, opts ...client.CallOption) (*Response, error)
 }
 
 type userService struct {
@@ -155,6 +157,26 @@ func (c *userService) DeleteEmployee(ctx context.Context, in *Request, opts ...c
 	return out, nil
 }
 
+func (c *userService) RevokeRole(ctx context.Context, in *RoleControlRequest, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "UserService.RevokeRole", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userService) GrantRole(ctx context.Context, in *RoleControlRequest, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "UserService.GrantRole", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for UserService service
 
 type UserServiceHandler interface {
@@ -167,6 +189,8 @@ type UserServiceHandler interface {
 	CreateEmployee(context.Context, *OperationUserRequest, *Response) error
 	UpdateEmployee(context.Context, *OperationUserRequest, *Response) error
 	DeleteEmployee(context.Context, *Request, *Response) error
+	RevokeRole(context.Context, *RoleControlRequest, *Response) error
+	GrantRole(context.Context, *RoleControlRequest, *Response) error
 }
 
 func RegisterUserServiceHandler(s server.Server, hdlr UserServiceHandler, opts ...server.HandlerOption) error {
@@ -180,6 +204,8 @@ func RegisterUserServiceHandler(s server.Server, hdlr UserServiceHandler, opts .
 		CreateEmployee(ctx context.Context, in *OperationUserRequest, out *Response) error
 		UpdateEmployee(ctx context.Context, in *OperationUserRequest, out *Response) error
 		DeleteEmployee(ctx context.Context, in *Request, out *Response) error
+		RevokeRole(ctx context.Context, in *RoleControlRequest, out *Response) error
+		GrantRole(ctx context.Context, in *RoleControlRequest, out *Response) error
 	}
 	type UserService struct {
 		userService
@@ -226,4 +252,12 @@ func (h *userServiceHandler) UpdateEmployee(ctx context.Context, in *OperationUs
 
 func (h *userServiceHandler) DeleteEmployee(ctx context.Context, in *Request, out *Response) error {
 	return h.UserServiceHandler.DeleteEmployee(ctx, in, out)
+}
+
+func (h *userServiceHandler) RevokeRole(ctx context.Context, in *RoleControlRequest, out *Response) error {
+	return h.UserServiceHandler.RevokeRole(ctx, in, out)
+}
+
+func (h *userServiceHandler) GrantRole(ctx context.Context, in *RoleControlRequest, out *Response) error {
+	return h.UserServiceHandler.GrantRole(ctx, in, out)
 }

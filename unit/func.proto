@@ -10,6 +10,8 @@ service funcService {
   rpc AddControlUnit(AddControlUnitRequest) returns(Response){}
   rpc GetSubFuncId(Request) returns(Response){}
   rpc DeleteControlUnit(Request) returns(Response){}
+  rpc RevokeRole(RoleControlRequest) returns(Response){}
+  rpc GrantRole(RoleControlRequest) returns(Response){}
 }
 
 message Request {
@@ -45,6 +47,11 @@ message AddControlUnitRequest{
 message Response {
   string msg = 1;
   int32 num = 2;
+}
+
+message RoleControlRequest{
+  string controlUnitId = 1;
+  repeated string roleIdList = 2;
 }
 
 

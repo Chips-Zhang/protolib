@@ -48,6 +48,7 @@ type RoleService interface {
 	AddRole(ctx context.Context, in *NewRoleRequest, opts ...client.CallOption) (*Response, error)
 	UpdateRole(ctx context.Context, in *NewRoleRequest, opts ...client.CallOption) (*Response, error)
 	DeleteRole(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
+	GetTransferData(ctx context.Context, in *TransferDataRequest, opts ...client.CallOption) (*TransferDataResponse, error)
 }
 
 type roleService struct {
@@ -122,6 +123,16 @@ func (c *roleService) DeleteRole(ctx context.Context, in *Request, opts ...clien
 	return out, nil
 }
 
+func (c *roleService) GetTransferData(ctx context.Context, in *TransferDataRequest, opts ...client.CallOption) (*TransferDataResponse, error) {
+	req := c.c.NewRequest(c.name, "RoleService.GetTransferData", in)
+	out := new(TransferDataResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for RoleService service
 
 type RoleServiceHandler interface {
@@ -131,6 +142,7 @@ type RoleServiceHandler interface {
 	AddRole(context.Context, *NewRoleRequest, *Response) error
 	UpdateRole(context.Context, *NewRoleRequest, *Response) error
 	DeleteRole(context.Context, *Request, *Response) error
+	GetTransferData(context.Context, *TransferDataRequest, *TransferDataResponse) error
 }
 
 func RegisterRoleServiceHandler(s server.Server, hdlr RoleServiceHandler, opts ...server.HandlerOption) error {
@@ -141,6 +153,7 @@ func RegisterRoleServiceHandler(s server.Server, hdlr RoleServiceHandler, opts .
 		AddRole(ctx context.Context, in *NewRoleRequest, out *Response) error
 		UpdateRole(ctx context.Context, in *NewRoleRequest, out *Response) error
 		DeleteRole(ctx context.Context, in *Request, out *Response) error
+		GetTransferData(ctx context.Context, in *TransferDataRequest, out *TransferDataResponse) error
 	}
 	type RoleService struct {
 		roleService
@@ -175,4 +188,8 @@ func (h *roleServiceHandler) UpdateRole(ctx context.Context, in *NewRoleRequest,
 
 func (h *roleServiceHandler) DeleteRole(ctx context.Context, in *Request, out *Response) error {
 	return h.RoleServiceHandler.DeleteRole(ctx, in, out)
+}
+
+func (h *roleServiceHandler) GetTransferData(ctx context.Context, in *TransferDataRequest, out *TransferDataResponse) error {
+	return h.RoleServiceHandler.GetTransferData(ctx, in, out)
 }

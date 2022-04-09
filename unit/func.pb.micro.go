@@ -46,6 +46,8 @@ type FuncService interface {
 	AddControlUnit(ctx context.Context, in *AddControlUnitRequest, opts ...client.CallOption) (*Response, error)
 	GetSubFuncId(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
 	DeleteControlUnit(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
+	RevokeRole(ctx context.Context, in *RoleControlRequest, opts ...client.CallOption) (*Response, error)
+	GrantRole(ctx context.Context, in *RoleControlRequest, opts ...client.CallOption) (*Response, error)
 }
 
 type funcService struct {
@@ -100,6 +102,26 @@ func (c *funcService) DeleteControlUnit(ctx context.Context, in *Request, opts .
 	return out, nil
 }
 
+func (c *funcService) RevokeRole(ctx context.Context, in *RoleControlRequest, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "FuncService.RevokeRole", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *funcService) GrantRole(ctx context.Context, in *RoleControlRequest, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "FuncService.GrantRole", in)
+	out := new(Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for FuncService service
 
 type FuncServiceHandler interface {
@@ -107,6 +129,8 @@ type FuncServiceHandler interface {
 	AddControlUnit(context.Context, *AddControlUnitRequest, *Response) error
 	GetSubFuncId(context.Context, *Request, *Response) error
 	DeleteControlUnit(context.Context, *Request, *Response) error
+	RevokeRole(context.Context, *RoleControlRequest, *Response) error
+	GrantRole(context.Context, *RoleControlRequest, *Response) error
 }
 
 func RegisterFuncServiceHandler(s server.Server, hdlr FuncServiceHandler, opts ...server.HandlerOption) error {
@@ -115,6 +139,8 @@ func RegisterFuncServiceHandler(s server.Server, hdlr FuncServiceHandler, opts .
 		AddControlUnit(ctx context.Context, in *AddControlUnitRequest, out *Response) error
 		GetSubFuncId(ctx context.Context, in *Request, out *Response) error
 		DeleteControlUnit(ctx context.Context, in *Request, out *Response) error
+		RevokeRole(ctx context.Context, in *RoleControlRequest, out *Response) error
+		GrantRole(ctx context.Context, in *RoleControlRequest, out *Response) error
 	}
 	type FuncService struct {
 		funcService
@@ -141,4 +167,12 @@ func (h *funcServiceHandler) GetSubFuncId(ctx context.Context, in *Request, out 
 
 func (h *funcServiceHandler) DeleteControlUnit(ctx context.Context, in *Request, out *Response) error {
 	return h.FuncServiceHandler.DeleteControlUnit(ctx, in, out)
+}
+
+func (h *funcServiceHandler) RevokeRole(ctx context.Context, in *RoleControlRequest, out *Response) error {
+	return h.FuncServiceHandler.RevokeRole(ctx, in, out)
+}
+
+func (h *funcServiceHandler) GrantRole(ctx context.Context, in *RoleControlRequest, out *Response) error {
+	return h.FuncServiceHandler.GrantRole(ctx, in, out)
 }

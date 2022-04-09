@@ -12,6 +12,7 @@ service roleService {
   rpc AddRole(NewRoleRequest) returns(Response){}
   rpc UpdateRole(NewRoleRequest) returns(Response){}
   rpc DeleteRole(Request) returns(Response){}
+  rpc GetTransferData(TransferDataRequest) returns(TransferDataResponse){}
 }
 
 message Request {
@@ -63,4 +64,20 @@ message UserListResponse{
 message UserInfo{
     string employeeId = 1;
     string employeeName = 2;
+}
+
+message TransferDataRequest{
+  string sourceId = 1;
+  string targetId = 2;
+}
+
+message TransferDataResponse{
+    repeated TransferItem dataList = 1;
+    repeated string passDataList = 2;
+}
+
+message TransferItem{
+  string key = 1;
+  string label = 2;
+  bool disable = 3;
 }
