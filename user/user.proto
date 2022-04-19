@@ -17,6 +17,8 @@ service userService {
   rpc DeleteEmployee(Request) returns(Response){}
   rpc RevokeRole(RoleControlRequest) returns(Response){}
   rpc GrantRole(RoleControlRequest) returns(Response){}
+  rpc EditDept(DeptRequest) returns(DeptResponse){}
+  rpc DeleteDept(DeptRequest) returns(DeptResponse){}
 }
 
 message Request {
@@ -76,4 +78,10 @@ message UserInfo{
 message RoleControlRequest{
   string employeeCode = 1;
   repeated string roleIdList = 2;
+}
+
+message DeptRequest{
+    string name = 1;
+    string is = 2;
+    string parentId = 3;
 }

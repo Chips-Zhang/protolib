@@ -53,6 +53,8 @@ type UserService interface {
 	DeleteEmployee(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
 	RevokeRole(ctx context.Context, in *RoleControlRequest, opts ...client.CallOption) (*Response, error)
 	GrantRole(ctx context.Context, in *RoleControlRequest, opts ...client.CallOption) (*Response, error)
+	EditDept(ctx context.Context, in *DeptRequest, opts ...client.CallOption) (*DeptResponse, error)
+	DeleteDept(ctx context.Context, in *DeptRequest, opts ...client.CallOption) (*DeptResponse, error)
 }
 
 type userService struct {
@@ -177,6 +179,26 @@ func (c *userService) GrantRole(ctx context.Context, in *RoleControlRequest, opt
 	return out, nil
 }
 
+func (c *userService) EditDept(ctx context.Context, in *DeptRequest, opts ...client.CallOption) (*DeptResponse, error) {
+	req := c.c.NewRequest(c.name, "UserService.EditDept", in)
+	out := new(DeptResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userService) DeleteDept(ctx context.Context, in *DeptRequest, opts ...client.CallOption) (*DeptResponse, error) {
+	req := c.c.NewRequest(c.name, "UserService.DeleteDept", in)
+	out := new(DeptResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for UserService service
 
 type UserServiceHandler interface {
@@ -191,6 +213,8 @@ type UserServiceHandler interface {
 	DeleteEmployee(context.Context, *Request, *Response) error
 	RevokeRole(context.Context, *RoleControlRequest, *Response) error
 	GrantRole(context.Context, *RoleControlRequest, *Response) error
+	EditDept(context.Context, *DeptRequest, *DeptResponse) error
+	DeleteDept(context.Context, *DeptRequest, *DeptResponse) error
 }
 
 func RegisterUserServiceHandler(s server.Server, hdlr UserServiceHandler, opts ...server.HandlerOption) error {
@@ -206,6 +230,8 @@ func RegisterUserServiceHandler(s server.Server, hdlr UserServiceHandler, opts .
 		DeleteEmployee(ctx context.Context, in *Request, out *Response) error
 		RevokeRole(ctx context.Context, in *RoleControlRequest, out *Response) error
 		GrantRole(ctx context.Context, in *RoleControlRequest, out *Response) error
+		EditDept(ctx context.Context, in *DeptRequest, out *DeptResponse) error
+		DeleteDept(ctx context.Context, in *DeptRequest, out *DeptResponse) error
 	}
 	type UserService struct {
 		userService
@@ -260,4 +286,12 @@ func (h *userServiceHandler) RevokeRole(ctx context.Context, in *RoleControlRequ
 
 func (h *userServiceHandler) GrantRole(ctx context.Context, in *RoleControlRequest, out *Response) error {
 	return h.UserServiceHandler.GrantRole(ctx, in, out)
+}
+
+func (h *userServiceHandler) EditDept(ctx context.Context, in *DeptRequest, out *DeptResponse) error {
+	return h.UserServiceHandler.EditDept(ctx, in, out)
+}
+
+func (h *userServiceHandler) DeleteDept(ctx context.Context, in *DeptRequest, out *DeptResponse) error {
+	return h.UserServiceHandler.DeleteDept(ctx, in, out)
 }
